@@ -1,0 +1,22 @@
+class Solution(object):
+    def combinationSum3(self, k, n):
+        """
+        :type k: int
+        :type n: int
+        :rtype: List[List[int]]
+        """
+        def find_combinations(k, n, used, current_combination, all_combinations):
+          if k == 0:
+            if n == 0:
+              all_combinations.append(current_combination)
+            return
+        
+          for i in range(1, 10):
+            if not used[i]:
+              used[i] = True
+              find_combinations(k - 1, n - i, used, current_combination + [i], all_combinations)
+              used[i] = False
+        
+        all_combinations = []
+        find_combinations(k, n, [False] * 10, [], all_combinations)
+        return all_combinations
