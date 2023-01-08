@@ -1,0 +1,19 @@
+#https://leetcode.com/problems/rotate-function/
+from typing import List
+
+class Solution:
+    def maxRotateFunction(A: List[int]) -> int:
+        n = len(A)
+        sum = 0
+        fi = 0
+        for i in range(n):
+            sum += A[i]
+            fi += i * A[i]
+        max_fi = fi
+        for i in range(1, n):
+            fi = fi + sum - n * A[n-i]
+            max_fi = max(max_fi, fi)
+        return max_fi
+
+    A = [4, 3, 2, 6]
+    print(maxRotateFunction(A))
