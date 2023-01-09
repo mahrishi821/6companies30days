@@ -1,0 +1,30 @@
+#https://leetcode.com/problems/most-profitable-path-in-a-tree/
+class Solution:
+    def __init__(self, val, children):
+        self.val = val
+        self.children = children
+
+    def dp(node, memo):
+        if node is None:
+            return 0
+        if node in memo:
+            return memo[node]
+
+        profit = 0
+        for child in node.children:
+            profit = max(profit, dp(child, memo) + child.val)
+
+        memo[node] = profit
+        return profit
+
+    def maxProfit(root):
+        if root is None:
+            return 0
+
+        memo = {}
+        max_profit = 0
+        for child in root.children:
+            max_profit = max(max_profit, dp(child, memo) + child.val)
+
+        return max_profit
+
