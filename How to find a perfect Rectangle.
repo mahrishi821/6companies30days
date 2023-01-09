@@ -30,5 +30,5 @@ class Solution:
 # Instantiate an object of the Solution class
 solver = Solution()
 
-# Call the isRectangleCover method on the object
+# Call  isRectangleCover method on the object
 result = solver.isRectangleCover(rectangles)
