@@ -1,0 +1,27 @@
+#https://leetcode.com/problems/course-schedule/
+class Solution:
+    
+
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        # Create a graph representation of the courses
+        graph = collections.defaultdict(list)
+        for prerequisite in prerequisites:
+            graph[prerequisite[1]].append(prerequisite[0])
+        
+        # Perform a DFS on the graph, keeping track of the visited nodes
+        visited = set()
+        def dfs(node):
+            if node in visited:
+                return False
+            visited.add(node)
+            for neighbor in graph[node]:
+                if not dfs(neighbor):
+                    return False
+            visited.remove(node)
+            return True
+        
+        # Check if it is possible to finish all of the courses
+        for node in range(numCourses):
+            if not dfs(node):
+                return False
+        return True
