@@ -1,0 +1,34 @@
+class Solution:
+    def isRectangleCover(self, rectangles: List[List[int]]) -> bool:
+        # Store the number of times each point appears in the list of rectangles
+        point_count = collections.defaultdict(int)
+        for rectangle in rectangles:
+            for point in [(rectangle[0], rectangle[1]), (rectangle[0], rectangle[3]), (rectangle[2], rectangle[1]), (rectangle[2], rectangle[3])]:
+                point_count[point] += 1
+        
+        bl_corner = None
+        tr_corner = None
+        for point, count in point_count.items():
+            if count == 4:
+                if bl_corner is not None:
+                    return False
+                bl_corner = point
+            elif count == 2:
+                if tr_corner is not None:
+                    return False
+                tr_corner = point
+            elif count != 1:
+                return False
+        
+        # Check that the bounding rectangle is the smallest rectangle that can enclose all of the rectangles
+        for rectangle in rectangles:
+            if rectangle[0] != bl_corner[0] or rectangle[1] != bl_corner[1] or rectangle[2] != tr_corner[0] or rectangle[3] != tr_corner[1]:
+                return False
+        
+        return True
+
+# Instantiate an object of the Solution class
+solver = Solution()
+
+# Call the isRectangleCover method on the object
+result = solver.isRectangleCover(rectangles)
