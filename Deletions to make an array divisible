@@ -1,0 +1,12 @@
+#https://leetcode.com/problems/minimum-deletions-to-make-array-divisible/
+class Solution:
+    def minOperations(self, nums: List[int], numsDivide: List[int]) -> int:
+        n = len(s)
+        cnt = [0] * 26
+        for i in range(n):
+            cnt[ord(s[i]) - ord('a')] += 1
+        odds = 0
+        for i in range(26):
+            if cnt[i] % 2:
+                odds += 1
+        return max(0, odds-1)
