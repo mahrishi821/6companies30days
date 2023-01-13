@@ -1,0 +1,17 @@
+#https://leetcode.com/problems/number-of-pairs-satisfying-inequality/
+class Solution(object):
+    def num_of_pairs(n, a, b, c, d):
+        count = 0
+        a = [x+y for x,y in zip(a,c)]
+        b = [x+y for x,y in zip(b,d)]
+        a.sort()
+        b.sort()
+        i = 0
+        j = 0
+        while i < n and j < n:
+            if a[i] > b[j]:
+                count += n-j
+                i += 1
+            else:
+                j += 1
+        return count
