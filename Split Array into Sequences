@@ -1,0 +1,22 @@
+#https://leetcode.com/problems/split-array-into-consecutive-subsequences/
+
+class Solution:
+    def isPossible(self, nums: List[int]) -> bool:
+        freq = {}
+        tails = {}
+        for num in nums:
+            freq[num] = freq.get(num, 0) + 1
+        for num in nums:
+            if freq[num] == 0:
+                continue
+            elif tails.get(num, 0) > 0:
+                tails[num] -= 1
+                tails[num + 1] = tails.get(num + 1, 0) + 1
+            elif freq.get(num + 1, 0) > 0 and freq.get(num + 2, 0) > 0:
+                freq[num + 1] -= 1
+                freq[num + 2] -= 1
+                tails[num + 3] = tails.get(num + 3, 0) + 1
+            else:
+                return False
+            freq[num] -= 1
+        return True
