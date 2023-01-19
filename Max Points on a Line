@@ -1,0 +1,32 @@
+#https://leetcode.com/problems/max-points-on-a-line/submissions/881164520/
+class Solution:
+    def maxPoints(self, points: List[List[int]]) -> int:
+        if len(points) <= 2:
+            return len(points)
+        
+        max_points = 0
+        for i in range(len(points)):
+            slopes = {}
+            same_points = 1
+            for j in range(i + 1, len(points)):
+                if points[i][0] == points[j][0] and points[i][1] == points[j][1]:
+                    same_points += 1
+                    continue
+                
+                slope = None
+                if points[i][0] == points[j][0]:
+                    slope = float('inf')
+                else:
+                    slope = (points[j][1] - points[i][1]) / (points[j][0] - points[i][0])
+                
+                if slope in slopes:
+                    slopes[slope] += 1
+                else:
+                    slopes[slope] = 1
+            
+            if slopes:
+                max_points = max(max_points, max(slopes.values()) + same_points)
+            else:
+                max_points = max(max_points, same_points)
+        
+        return max_points
