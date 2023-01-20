@@ -1,0 +1,10 @@
+class Solution:
+    def maximumBobPoints(self, numArrows: int, aliceArrows: List[int]) -> List[int]:
+        bobArrows = [0] * 12
+        for i in range(12):
+            if aliceArrows[i] < numArrows:
+                bobArrows[i] = numArrows - aliceArrows[i]
+                numArrows -= bobArrows[i]
+            else:
+                bobArrows[i] = 0
+        return bobArrows
