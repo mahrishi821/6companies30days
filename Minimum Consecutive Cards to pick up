@@ -1,0 +1,12 @@
+
+class Solution:
+    def minimumCardPickup(self, cards: List[int]) -> int:
+        n = len(cards)
+        dp = [0] * n
+        for i in range(1, n):
+            dp[i] = dp[i-1] + (cards[i] != cards[i-1])
+        ans = dp[-1]
+        for i in range(n-2, -1, -1):
+            if cards[i] != cards[i+1]:
+                ans = min(ans, dp[i])
+        return ans
