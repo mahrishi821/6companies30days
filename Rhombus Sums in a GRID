@@ -1,0 +1,20 @@
+class Solution:
+    def getBiggestThree(self, grid: List[List[int]]) -> List[int]:
+        # Initialize a set to store the distinct rhombus sums
+        rhombus_sums = set()
+        
+        # Iterate through each cell in the grid
+        for i in range(len(grid)):
+            for j in range(len(grid[i])):
+                # Initialize a variable to store the current rhombus sum
+                current_sum = 0
+                
+                # Check the rhombus shape formed by the current cell
+                for x in range(-min(i, j, len(grid)-i-1, len(grid[i])-j-1), min(i, j, len(grid)-i-1, len(grid[i])-j-1)+1):
+                    current_sum += grid[i][j + x] + grid[i][j - x]
+                
+                # Add the current rhombus sum to the set
+                rhombus_sums.add(current_sum)
+        
+        # Sort the set in descending order and return the first three elements
+        return sorted(list(rhombus_sums), reverse=True)[:3]
