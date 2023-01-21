@@ -1,0 +1,23 @@
+#https://leetcode.com/problems/invalid-transactions/
+class Solution:
+    def invalidTransactions(self, transactions: List[str]) -> List[str]:
+        trans = []
+        invalid = []
+        
+        for tran in transactions:
+            name, time, amount, city = tran.split(',')
+            amount = int(amount)
+            time = int(time)
+            trans.append([name, time, amount, city])
+        
+        for i, tran in enumerate(trans):
+            if tran[2] >= 1000:
+                invalid.append(tran)
+            for j in range(i+1, len(trans)):
+                if trans[j][0] == tran[0] and abs(trans[j][1] - tran[1]) <= 60:
+                    invalid.append(tran)
+                    invalid.append(trans[j])
+                    
+        invalid = list(set(tuple(i) for i in invalid))
+        invalid = [",".join([str(i) for i in tran]) for tran in invalid]
+        return invalid
