@@ -1,0 +1,22 @@
+
+class Solution:
+    def countPairs(self, nums: List[int]) -> int:
+        # Initialize a dictionary to store the frequency of each element in the array
+        freq = {}
+        
+        # Iterate through the array and update the frequency of each element
+        for num in nums:
+            if num in freq:
+                freq[num] += 1
+            else:
+                freq[num] = 1
+        
+        # Initialize a variable to store the number of nice pairs
+        count = 0
+        
+        # Iterate through the dictionary and calculate the number of nice pairs for each element
+        for num, f in freq.items():
+            if f > 1:
+                count += (f * (f - 1)) // 2
+        
+        return count
