@@ -1,0 +1,36 @@
+def maxGoodPeople(n: int, statements: List[str]) -> int:
+    friends = [set() for _ in range(n)]
+    enemies = [set() for _ in range(n)]
+
+    for s in statements:
+        words = s.split()
+        x, y = int(words[0]), int(words[-1])
+        if words[1] == "is":
+            friends[x].add(y)
+            friends[y].add(x)
+        else:
+            enemies[x].add(y)
+            enemies[y].add(x)
+
+    def dfs(visited, node):
+        visited.add(node)
+        for friend in friends[node]:
+            if friend not in visited:
+                dfs(visited, friend)
+
+    ans = 0
+    for i in range(n):
+        if i not in visited:
+            visited = set()
+            dfs(visited, i)
+            valid = True
+            for j in visited:
+                for enemy in enemies[j]:
+                    if enemy in visited:
+                        valid = False
+                        break
+                if not valid:
+                    break
+            if valid:
+                ans = max(ans, len(visited))
+    return ans
