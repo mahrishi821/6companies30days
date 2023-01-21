@@ -1,0 +1,15 @@
+#https://leetcode.com/problems/all-elements-in-two-binary-search-trees/
+class Solution:
+    def getAllElements(self, root1: TreeNode, root2: TreeNode) -> List[int]:
+        def inorder(node, vals):
+            if node:
+                inorder(node.left, vals)
+                vals.append(node.val)
+                inorder(node.right, vals)
+
+        vals1, vals2 = [], []
+        inorder(root1, vals1)
+        inorder(root2, vals2)
+        vals1.extend(vals2)
+        vals1.sort()
+        return vals1
