@@ -1,0 +1,16 @@
+#https://leetcode.com/problems/shopping-offers/
+class Solution:
+    def shoppingOffers(self, price: List[int], special: List[List[int]], needs: List[int]) -> int:
+        def dfs(cur, needs):
+            if cur == n:
+                total_cost = 0
+                for i in range(n):
+                    total_cost += needs[i] * price[i]
+                return total_cost
+            res = total_cost
+            for i in range(m):
+                if all(needs[j] >= special[i][j] for j in range(n)):
+                    res = min(res, special[i][-1] + dfs(cur+1, [needs[j]-special[i][j] for j in range(n)]))
+            return res
+        n, m = len(needs), len(special)
+        return dfs(0, needs)
