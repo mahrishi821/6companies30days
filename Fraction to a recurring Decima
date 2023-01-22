@@ -1,0 +1,29 @@
+#https://leetcode.com/problems/fraction-to-recurring-decimal/submissions/883153685/
+class Solution:
+    def fractionToDecimal(self, numerator: int, denominator: int) -> str:
+        if numerator == 0:
+            return "0"
+        res = []
+        if (numerator < 0) ^ (denominator < 0):
+            res.append("-")
+        
+        numerator = abs(numerator)
+        denominator = abs(denominator)
+        
+        res.append(str(numerator // denominator))
+        if numerator % denominator == 0:
+            return "".join(res)
+        
+        res.append(".")
+        r_map = {}
+        r = numerator % denominator
+        while r:
+            if r in r_map:
+                res.insert(r_map[r], "(")
+                res.append(")")
+                break
+            r_map[r] = len(res)
+            r *= 10
+            res.append(str(r // denominator))
+            r %= denominator
+        return "".join(res)
