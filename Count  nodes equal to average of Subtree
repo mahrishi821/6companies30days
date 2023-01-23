@@ -1,0 +1,20 @@
+class Solution:
+    def averageOfSubtree(self, root: Optional[TreeNode]) -> int:
+        def dfs(node: TreeNode) -> Tuple[int, int, int]:
+            if not node:
+                return 0, 0, 0
+            sum_, count, avg = node.val, 1, node.val
+            left_sum, left_count, left_avg = dfs(node.left)
+            right_sum, right_count, right_avg = dfs(node.right)
+            if left_count:
+                sum_ += left_sum
+                count += left_count
+                avg = (avg * count + left_avg * left_count) / (count + left_count)
+            if right_count:
+                sum_ += right_sum
+                count += right_count
+                avg = (avg * count + right_avg * right_count) / (count + right_count)
+            return sum_, count, avg
+        
+        _, _, avg = dfs(root)
+        return avg
