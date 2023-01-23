@@ -1,0 +1,26 @@
+#https://leetcode.com/problems/minimum-genetic-mutation/submissions/883656464/
+class Solution:
+    def minMutation(self, start: str, end: str, bank: List[str]) -> int:
+        bank = set(bank)
+        if end not in bank:
+            return -1
+        
+        queue = collections.deque([start])
+        visited = set([start])
+        steps = 0
+        
+        while queue:
+            for _ in range(len(queue)):
+                gene = queue.popleft()
+                if gene == end:
+                    return steps
+                
+                for i in range(len(gene)):
+                    for c in "ACGT":
+                        next_gene = gene[:i] + c + gene[i+1:]
+                        if next_gene in bank and next_gene not in visited:
+                            visited.add(next_gene)
+                            queue.append(next_gene)
+            steps += 1
+        
+        return -1
