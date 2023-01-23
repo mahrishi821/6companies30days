@@ -1,0 +1,11 @@
+#https://leetcode.com/problems/number-of-matching-subsequences/
+class Solution:
+    def numMatchingSubseq(self, S: str, words: List[str]) -> int:
+        def is_subsequence(word, S):
+            i = 0
+            for c in S:
+                if i < len(word) and word[i] == c:
+                    i += 1
+            return i == len(word)
+
+        return sum(is_subsequence(word, S) for word in words)
