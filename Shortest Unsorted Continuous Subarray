@@ -1,0 +1,17 @@
+class solution:    
+    def findUnsortedSubarray(nums):
+        n = len(nums)
+        l, r = n, 0
+        max_num, min_num = float('-inf'), float('inf')
+
+        for i in range(n):
+            max_num = max(max_num, nums[i])
+            if nums[i] < max_num:
+                r = i
+
+        for i in range(n-1, -1, -1):
+            min_num = min(min_num, nums[i])
+            if nums[i] > min_num:
+                l = i
+
+        return 0 if r <= l else r - l + 1
