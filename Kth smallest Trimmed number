@@ -1,0 +1,8 @@
+class Solution:
+    def smallestTrimmedNumbers(self, nums: List[str], queries: List[List[int]]) -> List[int]:
+        nums = sorted(nums)
+        res = []
+        for query in queries:
+            k, l, r = query
+            res.append(sorted(nums[l-1:r])[k-1])
+        return res
