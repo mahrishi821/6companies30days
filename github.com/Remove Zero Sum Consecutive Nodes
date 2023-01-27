@@ -1,0 +1,24 @@
+#https://leetcode.com/problems/remove-zero-sum-consecutive-nodes-from-linked-list/submissions/886299321/
+class Solution:
+    def removeZeroSumSublists(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode(0)
+        dummy.next = head
+        current = dummy
+        prefix_sum = 0
+        prefix_sum_map = {}
+
+        while current:
+            prefix_sum += current.val
+            if prefix_sum in prefix_sum_map:
+                temp = prefix_sum_map[prefix_sum].next
+                prefix_sum += temp.val
+                while temp != current:
+                    if prefix_sum in prefix_sum_map:
+                        del prefix_sum_map[prefix_sum]
+                    temp = temp.next
+                    prefix_sum += temp.val
+                prefix_sum_map[prefix_sum].next = current.next
+            else:
+                prefix_sum_map[prefix_sum] = current
+            current = current.next
+        return dummy.next
