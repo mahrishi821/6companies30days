@@ -1,0 +1,33 @@
+#https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/submissions/886314590/
+from heapq import heappush, heappop
+from typing import List
+
+class Solution:
+    def findTheCity(self, n: int, edges: List[List[int]], distanceThreshold: int) -> int:
+        graph = [[float('inf') for _ in range(n)] for _ in range(n)]
+        for u, v, w in edges:
+            graph[u][v] = graph[v][u] = w
+        for i in range(n):
+            graph[i][i] = 0
+            
+        res = n
+        min_neighbors = float('inf')
+        for start in range(n):
+            dist = [float('inf')] * n
+            dist[start] = 0
+            heap = [(0, start)]
+            while heap:
+                d, u = heappop(heap)
+                if d > dist[u]:
+                    continue
+                for v in range(n):
+                    if graph[u][v] != float('inf'):
+                        new_dist = d + graph[u][v]
+                        if new_dist <= distanceThreshold and new_dist < dist[v]:
+                            dist[v] = new_dist
+                            heappush(heap, (new_dist, v))
+            count = sum(1 for d in dist if d <= distanceThreshold)
+            if count <= min_neighbors:
+                min_neighbors = count
+                res = start
+        return res
