@@ -1,0 +1,12 @@
+class Solution:
+    def shoppingOffers(self, price: List[int], special: List[List[int]], needs: List[int]) -> int:
+        n = len(needs)
+        dp = [0] + [float('inf')] * sum(needs)
+        for i in range(1, sum(needs) + 1):
+            for j in range(n):
+                if i >= needs[j]:
+                    dp[i] = min(dp[i], dp[i - needs[j]] + price[j])
+            for offer in special:
+                if i >= offer[:-1]:
+                    dp[i] = min(dp[i], dp[i - sum(offer[:-1])] + offer[-1])
+        return dp[sum(needs)]
