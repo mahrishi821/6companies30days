@@ -1,0 +1,35 @@
+#https://leetcode.com/problems/find-in-mountain-array/submissions/886308082/
+class Solution:
+    def findInMountainArray(self, target: int, mountain_arr: 'MountainArray') -> int:
+        n = mountain_arr.length()
+        l, r = 0, n-1
+        # find the peak of the mountain
+        while l < r:
+            mid = (l + r) // 2
+            if mountain_arr.get(mid) < mountain_arr.get(mid+1):
+                l = mid + 1
+            else:
+                r = mid
+        peak = l
+        # search for target in the left half of the mountain (ascending)
+        l, r = 0, peak
+        while l <= r:
+            mid = (l + r) // 2
+            if mountain_arr.get(mid) == target:
+                return mid
+            elif mountain_arr.get(mid) < target:
+                l = mid + 1
+            else:
+                r = mid - 1
+        # search for target in the right half of the mountain (descending)
+        l, r = peak, n-1
+        while l <= r:
+            mid = (l + r) // 2
+            if mountain_arr.get(mid) == target:
+                return mid
+            elif mountain_arr.get(mid) > target:
+                l = mid + 1
+            else:
+                r = mid - 1
+        # if target not found
+        return -1
