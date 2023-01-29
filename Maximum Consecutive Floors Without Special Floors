@@ -1,0 +1,10 @@
+def max_consecutive_floors(floors):
+    max_count = 0
+    cur_count = 0
+    for floor in floors:
+        if floor == 0:
+            cur_count += 1
+        else:
+            max_count = max(max_count, cur_count)
+            cur_count = 0
+    return max(max_count, cur_count)
