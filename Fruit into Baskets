@@ -1,0 +1,12 @@
+def totalFruit(tree):
+    start, end, max_length, fruit_count = 0, 0, 0, {}
+    while end < len(tree):
+        fruit_count[tree[end]] = fruit_count.get(tree[end], 0) + 1
+        while len(fruit_count) > 2:
+            fruit_count[tree[start]] -= 1
+            if fruit_count[tree[start]] == 0:
+                del fruit_count[tree[start]]
+            start += 1
+        max_length = max(max_length, end - start + 1)
+        end += 1
+    return max_length
