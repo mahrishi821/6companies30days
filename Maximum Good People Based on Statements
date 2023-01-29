@@ -1,0 +1,10 @@
+def findJudge(n, trust):
+    trustworthy = set()
+    untrusted = set(range(1, n+1))
+    for a, b in trust:
+        untrusted.discard(a)
+        trustworthy.add(b)
+    for person in untrusted:
+        if len(trustworthy - {person}) == n - 1:
+            return person
+    return -1
