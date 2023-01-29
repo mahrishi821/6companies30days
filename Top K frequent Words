@@ -1,0 +1,9 @@
+#https://leetcode.com/problems/top-k-frequent-words/submissions/887535307/
+from collections import Counter
+
+class Solution:
+    def topKFrequent(self, words: List[str], k: int) -> List[str]:
+        count = Counter(words)
+        freq = [[word, freq] for word, freq in count.items()]
+        freq.sort(key=lambda x: (-x[1], x[0]))
+        return [word for word, _ in freq[:k]]
