@@ -1,0 +1,19 @@
+class Solution:
+    def distinctEchoSubstrings(self, text: str) -> int:
+        def check(mid):
+            left = right = mid
+            while right < len(text) and text[left] == text[right]:
+                left -= 1
+                right += 1
+            return right - mid
+        
+        n = len(text)
+        res = set()
+        for i in range(n):
+            length = max(check(i), check(i + 1))
+            for j in range(1, length):
+                if i - j >= 0 and text[i - j : i + length - j] in res:
+                    break
+            else:
+                res.add(text[i : i + length])
+        return len(res)
