@@ -1,0 +1,23 @@
+#https://leetcode.com/problems/random-pick-with-weight/submissions/888073700/
+import random
+from typing import List
+
+class Solution:
+    def __init__(self, w: List[int]):
+        self.w_sum = []
+        s = 0
+        for weight in w:
+            s += weight
+            self.w_sum.append(s)
+        self.total_sum = s
+
+    def pickIndex(self) -> int:
+        random_num = random.uniform(0, self.total_sum)
+        low, high = 0, len(self.w_sum)
+        while low < high:
+            mid = (low + high) // 2
+            if random_num > self.w_sum[mid]:
+                low = mid + 1
+            else:
+                high = mid
+        return low
