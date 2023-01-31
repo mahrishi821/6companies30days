@@ -1,0 +1,5 @@
+def isStrictlyPalindromic(n: int) -> bool:
+    if n == 0:
+        return False
+    num_str = str(n)
+    return num_str == num_str[::-1]
