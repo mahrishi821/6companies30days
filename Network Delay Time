@@ -1,0 +1,35 @@
+class Solution {
+    public int networkDelayTime(int[][] times, int N, int K) {
+        Map<Integer, Map<Integer, Integer>> graph = new HashMap<>();
+        for (int[] edge : times) {
+            int u = edge[0], v = edge[1], w = edge[2];
+            graph.computeIfAbsent(u, k -> new HashMap<>()).put(v, w);
+        }
+        int[] dist = new int[N + 1];
+        Arrays.fill(dist, Integer.MAX_VALUE);
+        dist[K] = 0;
+        boolean[] seen = new boolean[N + 1];
+        for (int i = 0; i < N; i++) {
+            int cur = -1;
+            for (int j = 1; j <= N; j++) {
+                if (!seen[j] && (cur == -1 || dist[j] < dist[cur]))
+                    cur = j;
+            }
+            if (cur == -1) break;
+            seen[cur] = true;
+            if (graph.containsKey(cur)) {
+                for (Map.Entry<Integer, Integer> entry : graph.get(cur).entrySet()) {
+                    int v = entry.getKey(), w = entry.getValue();
+                    dist[v] = Math.min(dist[v], dist[cur] + w);
+                }
+            }
+        }
+        int res = 0;
+        for (int i = 1; i <= N; i++) {
+            if (dist[i] == Integer.MAX_VALUE)
+                return -1;
+            res = Math.max(res, dist[i]);
+        }
+        return res;
+    }
+}
