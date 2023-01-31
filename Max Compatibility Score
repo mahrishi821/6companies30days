@@ -1,0 +1,57 @@
+class solution:
+        
+    def maximum_compatibility_score_sum(A, B):
+        def KM(w):
+            n = len(w)
+            mx = [0] * n
+            my = [0] * n
+            slack = [0x7fffffff] * n
+            link = [-1] * n
+            pre = [-1] * n
+            for i in range(n):
+                for j in range(n):
+                    mx[i] = max(mx[i], w[i][j])
+
+            for u in range(n):
+                for i in range(n):
+                    slack[i] = 0x7fffffff
+                while True:
+                    for i in range(n):
+                        if link[i] == -1:
+                            d = mx[u] + my[i] - w[u][i]
+                            if d < slack[i]:
+                                slack[i] = d
+                                pre[i] = u
+                    d = 0x7fffffff
+                    for i in range(n):
+                        if link[i] == -1 and slack[i] < d:
+                            d = slack[i]
+                    for i in range(n):
+                        if link[i] != -1:
+                            mx[link[i]] -= d
+                            my[i] += d
+                        else:
+                            slack[i] -= d
+                    for i in range(n):
+                        if link[i] == -1 and !slack[i]:
+                            link[i] = pre[i]
+                            v = i
+                            break
+                    else:
+                        continue
+                    break
+                while v != -1:
+                    u = link[v]
+                    link[v] = i
+                    i = u
+                res = 0
+            for i in range(n):
+                res += w[i][link[i]]
+            return res
+
+        n, m = len(A), len(B)
+        w = [[0] * m for i in range(n)]
+        for i in range(n):
+            for j in range(m):
+                w[i][j] = A[i][j] + B[j][i]
+        return KM(w)
