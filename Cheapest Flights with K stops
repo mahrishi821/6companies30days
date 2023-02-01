@@ -1,0 +1,20 @@
+#https://leetcode.com/problems/cheapest-flights-within-k-stops/
+from collections import defaultdict
+import heapq
+
+class Solution:
+    def findCheapestPrice(self, n: int, flights: List[List[int]], src: int, dst: int, K: int) -> int:
+        graph = defaultdict(list)
+        for u, v, w in flights:
+            graph[u].append((v, w))
+        
+        heap = [(0, src, K + 1)]
+        while heap:
+            cost, node, k = heapq.heappop(heap)
+            if node == dst:
+                return cost
+            if k > 0:
+                for v, w in graph[node]:
+                    heapq.heappush(heap, (cost + w, v, k - 1))
+        
+        return -1
