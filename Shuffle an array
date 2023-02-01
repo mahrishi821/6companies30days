@@ -1,0 +1,19 @@
+#https://leetcode.com/problems/shuffle-an-array/submissions/889158381/
+from typing import List
+import random
+
+class Solution:
+    def __init__(self, nums: List[int]):
+        self.original = nums[:]
+        self.nums = nums
+
+    def reset(self):
+        self.nums = self.original[:]
+        return self.nums
+
+    def shuffle(self):
+        n = len(self.nums)
+        for i in range(n - 1, 0, -1):
+            j = random.randint(0, i)
+            self.nums[i], self.nums[j] = self.nums[j], self.nums[i]
+        return self.nums
