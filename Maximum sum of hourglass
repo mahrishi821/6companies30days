@@ -1,0 +1,7 @@
+def hourglassSum(arr):
+    max_sum = -63  # minimum possible sum of an hourglass (7 * -9)
+    for i in range(1, len(arr) - 1):
+        for j in range(1, len(arr[0]) - 1):
+            current_sum = sum(arr[i - 1][j - 1:j + 2]) + arr[i][j] + sum(arr[i + 1][j - 1:j + 2])
+            max_sum = max(max_sum, current_sum)
+    return max_sum
