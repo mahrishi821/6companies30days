@@ -1,0 +1,14 @@
+#https://leetcode.com/problems/split-a-string-into-the-max-number-of-unique-substrings/submissions/889160038/
+class Solution:
+    def maxUniqueSplit(self, s: str) -> int:
+        def dfs(s, path):
+            if not s:
+                self.result = max(self.result, len(path))
+                return
+            for i in range(1, len(s) + 1):
+                if s[:i] not in path:
+                    dfs(s[i:], path | {s[:i]})
+        
+        self.result = 0
+        dfs(s, set())
+        return self.result
