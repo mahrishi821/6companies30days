@@ -1,0 +1,17 @@
+from typing import List
+
+class Solution:
+    def mostPopularCreator(self, creators: List[str], ids: List[str], views: List[int]) -> List[List[str]]:
+        creators_dict = {}
+        for creator, video_id, view in zip(creators, ids, views):
+            if creator in creators_dict:
+                creators_dict[creator][0] += view
+            else:
+                creators_dict[creator] = [view, [video_id]]
+        sorted_creators = sorted(creators_dict.items(), key=lambda x: x[1][0], reverse=True)
+        max_views = sorted_creators[0][1][0]
+        result = []
+        for creator, (view, video_ids) in sorted_creators:
+            if view == max_views:
+                result.append([creator, str(view)])
+        return result
